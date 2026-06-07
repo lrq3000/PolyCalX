@@ -113,7 +113,7 @@ public class CalendarRemoteViewsFactory implements RemoteViewsService.RemoteView
 
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_item);
 
-        // When the user taps an event row, show a dialog to choose the action
+        // Fill-in intent with event data merged into the activity template
         Intent fillInIntent = new Intent();
         fillInIntent.putExtra(EVENT_ID, mCursor.getLong(EVENT_INDEX_EVENTID));
         fillInIntent.putExtra(EVENT_BEGIN, mCursor.getLong(EVENT_INDEX_BEGIN));

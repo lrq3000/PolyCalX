@@ -5,12 +5,11 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.provider.CalendarContract;
+import android.os.Build;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -44,14 +43,18 @@ public class PolyCalXWidgetProvider extends AppWidgetProvider {
                 view_intent.setData(Uri.parse(view_intent.toUri(Intent.URI_INTENT_SCHEME)));
                 LogIntent("onUpdate(calendar) view_intent", view_intent);
 
-                // Launch Calendar when clicked
-                Intent launch_calendar_intent = new Intent(context, PolyCalXWidgetProvider.class);
-                launch_calendar_intent.setAction(PolyCalXWidgetProvider.LAUNCH_CALENDAR);
-                launch_calendar_intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
-                LogIntent("onUpdate(calendar) launch_calendar_intent", launch_calendar_intent);
+                // Template targets MainActivity directly so fill-in extras are merged
+                Intent mainLaunchIntent = new Intent(context, MainActivity.class);
+                mainLaunchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mainLaunchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
+                LogIntent("onUpdate(calendar) mainLaunchIntent", mainLaunchIntent);
 
-                PendingIntent launchCalPendingIntent = PendingIntent.getBroadcast(context, 0, launch_calendar_intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-                remoteViews.setPendingIntentTemplate(R.id.listview, launchCalPendingIntent);
+                int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    flags |= PendingIntent.FLAG_MUTABLE;
+                }
+                PendingIntent launchActivityTemplate = PendingIntent.getActivity(context, 0, mainLaunchIntent, flags);
+                remoteViews.setPendingIntentTemplate(R.id.listview, launchActivityTemplate);
 
             } else {
                 Log.d(TAG, "wID " + widgetId + " is in Screenshot mode");
@@ -100,21 +103,7 @@ public class PolyCalXWidgetProvider extends AppWidgetProvider {
             onUpdate(context, appWidgetManager, allWidgetIDs);
         }
         if( intent.getAction() == LAUNCH_CALENDAR){
-            long event_id = intent.getLongExtra(EVENT_ID, 0);
-            long event_begin = intent.getLongExtra(EVENT_BEGIN, 0);
-            int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-
-            Log.d(TAG, "LAUNCH_CALENDAR: event_id=" + event_id + " event_begin=" + event_begin + " widgetId=" + appWidgetId);
-
-            // Open MainActivity which will show a choice dialog
-            Intent mainIntent = new Intent(context, MainActivity.class);
-            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            mainIntent.putExtra(EVENT_ID, event_id);
-            mainIntent.putExtra(EVENT_BEGIN, event_begin);
-            if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-                mainIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            }
-            context.startActivity(mainIntent);
+            Log.d(TAG, "LAUNCH_CALENDAR received (handled directly by activity template)");
         }
 
         //LogIntent("onReceive()", intent);
