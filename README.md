@@ -1,7 +1,7 @@
 <p align="center"><img src="./imported_images/polycalx_icon_readme.png" title="" alt="" width="116" /></p>
 <h1 align="center">PolyCalX</h1>
 <p align="center">
-  A colorful, concise text-based calendar widget for Android.
+  A minimalistic event-driven calendar widget for Android
   <br /><a href="https://github.com/lrq3000/PolyCalX/releases/latest"><img src="/.github/badge.png" alt="Get it on GitHub" height="80" /></a>
 </p>
 
@@ -9,7 +9,15 @@
 <img title="" src="./imported_images/PolyCalX_screenshot.png" alt="" width="40%">
 </p>
 
+Is your calendar too dense? Then PolyCalX is for you!
+
+Get an overview of all upcoming calendar events at a glance!
+
+Supports multi-agendas with distinct colors.
+
 ## Description
+PolyCalX is a minimalistic event-driven calendar display widget for Android.
+
 This is a widget for Android to display the calendar/agenda in a concise
 text-based form factor.
 
@@ -29,7 +37,8 @@ It has a few major differences that sets it apart from other similar widgets:
 It is relatively simple, at least by Android project standards, and attempts
 to use the standard practices for each part. By default, it has no calendar
 permissions, and so it will be in "screenshot mode" (which was also used to
-prepare the app widget preview).
+prepare the app widget preview). Just tap on the widget to open the configuration
+page to assign your own real calendar.
 
 Tested on Android 10 and 13 (API 33).
 
