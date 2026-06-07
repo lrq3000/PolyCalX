@@ -43,6 +43,28 @@ You can also select which calendars you want to show (each in a different color 
 
 The date/time format can also be changed.
 
+## Build
+
+Build the project from the command line using the Gradle wrapper:
+
+```bash
+./gradlew assembleDebug
+```
+
+To build a release APK:
+
+```bash
+./gradlew assembleRelease
+```
+
+To clean the build directory:
+
+```bash
+./gradlew clean
+```
+
+On Windows, use `gradlew.bat` instead of `./gradlew`.
+
 ## License
 
 Licensed under the GNU General Public License v2 (GPLv2).
