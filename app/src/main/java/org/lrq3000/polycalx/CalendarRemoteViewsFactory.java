@@ -29,7 +29,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-import java.util.TimeZone;
 
 public class CalendarRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     public static final String EVENT_ID = "org.lrq3000.polycalx.EVENT_ID";
@@ -108,7 +107,11 @@ public class CalendarRemoteViewsFactory implements RemoteViewsService.RemoteView
         symbols.setAmPmStrings(new String[] { "am", "pm" });
         formatter.setDateFormatSymbols(symbols);
         Date StartDate = new Date( mCursor.getLong(EVENT_INDEX_BEGIN) );
-        formatter.setTimeZone(TimeZone.getTimeZone( mCursor.getString(EVENT_INDEX_EVENT_TIMEZONE) ));
+        // NOTE: We intentionally do NOT set the formatter's timezone to the event's timezone.
+        // The formatter defaults to the device's local timezone, which correctly converts the
+        // UTC epoch millisecond timestamp (from CalendarContract.Instances.BEGIN) to the
+        // user's current timezone. If we applied the event timezone here, events from other
+        // timezones would display their original time instead of the user's local time.
 
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_item);
 
