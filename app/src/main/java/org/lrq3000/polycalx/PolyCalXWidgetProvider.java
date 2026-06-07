@@ -100,26 +100,21 @@ public class PolyCalXWidgetProvider extends AppWidgetProvider {
             onUpdate(context, appWidgetManager, allWidgetIDs);
         }
         if( intent.getAction() == LAUNCH_CALENDAR){
-            //int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+            long event_id = intent.getLongExtra(EVENT_ID, 0);
             long event_begin = intent.getLongExtra(EVENT_BEGIN, 0);
+            int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 
-            Log.d(TAG, "Launching calendar at timestamp " + event_begin);
+            Log.d(TAG, "LAUNCH_CALENDAR: event_id=" + event_id + " event_begin=" + event_begin + " widgetId=" + appWidgetId);
 
-            Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
-            builder.appendPath("time");
-            ContentUris.appendId(builder, event_begin);
-            Intent eventbegin_intent = new Intent(Intent.ACTION_VIEW);
-            eventbegin_intent.setData(builder.build());
-            eventbegin_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(eventbegin_intent);
-/*
-            // Open a specific event, rather than time
-            Uri uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event_id);
-            Intent event_intent = new Intent(Intent.ACTION_VIEW);
-            event_intent.setData(uri);
-            event_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(event_intent);
- */
+            // Open MainActivity which will show a choice dialog
+            Intent mainIntent = new Intent(context, MainActivity.class);
+            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            mainIntent.putExtra(EVENT_ID, event_id);
+            mainIntent.putExtra(EVENT_BEGIN, event_begin);
+            if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                mainIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            }
+            context.startActivity(mainIntent);
         }
 
         //LogIntent("onReceive()", intent);
