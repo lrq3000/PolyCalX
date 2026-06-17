@@ -15,11 +15,6 @@
             android:title="@string/cal_select_title"
             android:summary="@string/cal_select_summary"
             android:key="calendar_select" />
-        <SwitchPreferenceCompat
-            android:key="open_settings_on_tap"
-            android:title="@string/open_settings_on_tap"
-            android:summary="@string/open_settings_on_tap_summary"
-            android:defaultValue="true" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Appearance">
         <SeekBarPreference

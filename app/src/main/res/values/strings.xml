@@ -20,8 +20,6 @@
 
     <string name="how_to_add_widget">This app is a home screen widget. For this version of Android, you must add widgets to your home screen by first navigating to the screen where you want the widget. Then, long-press on the screeen where you want the widget.</string>
     <string name="choose_widget">Multiple widget instances found. Please choose one to configure:</string>
-    <string name="open_settings_on_tap">Open Settings on Tap</string>
-    <string name="open_settings_on_tap_summary">When this is on, tapping on the widget will open the settings. When it\'s off, it will launch the Agenda app.</string>
     <string name="text_size_summary">Choose a font size using the Android \'Scaled Pixel\' units.</string>
     <string name="text_size">Text size (SP)</string>
 </resources>
