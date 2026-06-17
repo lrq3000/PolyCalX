@@ -1,6 +1,8 @@
-The color coding is intended to be especially useful for people who must coordinate multiple calendars. Multiple widgets can be added, and they will have separate calendar selection settings.
+PolyCalX is a minimalistic, event-driven calendar widget for Android.
 
-It is relatively simple, at least by Android project standards, and attempts to use the standard practices for each part. By default, it has no calendar permissions, and so it will be in "screenshot mode" (which was also used to prepare the app widget preview).
+It displays upcoming calendar events in a concise text-based form factor, with per-calendar color coding for people who coordinate multiple agendas. Long-running events are shown once and stay visible while they are ongoing instead of being repeated on every day they span.
 
-Source Code (GPLv2): https://github.com/jasongyorog/PolyCal
-Privacy Policy: http://gyorog.com/PolyCal-privacy.html
+Multiple widgets can be added, and each widget keeps its own calendar-selection settings. By default, PolyCalX starts in screenshot/demo mode without calendar access; grant the calendar permission from the widget settings when you want it to read your local calendars.
+
+Source code (GPLv2): https://github.com/lrq3000/PolyCalX
+Issue tracker: https://github.com/lrq3000/PolyCalX/issues
