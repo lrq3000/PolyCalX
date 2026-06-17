@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
+import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,12 @@ public final class WidgetRefreshScheduler {
     private WidgetRefreshScheduler() { }
 
     public static void scheduleAll(Context context) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] allWidgetIDs = appWidgetManager.getAppWidgetIds(new ComponentName(context, PolyCalXWidgetProvider.class));
+        if (allWidgetIDs == null || allWidgetIDs.length == 0) {
+            Log.d(TAG, "No active widgets found. Skipping refresh scheduling.");
+            return;
+        }
         scheduleNextMidnightRefresh(context);
         scheduleCalendarChangeJob(context);
     }

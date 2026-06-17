@@ -10,7 +10,7 @@
 
 ---
 
-### Task 1: Add Test Seams
+## Task 1: Add Test Seams
 
 **Files:**
 - Modify: `app/build.gradle`
@@ -21,7 +21,7 @@
 - [x] Add tests proving action matching does not depend on string identity.
 - [x] Add tests proving next-midnight calculation uses the next local day boundary.
 
-### Task 2: Implement Refresh Entry Points
+## Task 2: Implement Refresh Entry Points
 
 **Files:**
 - Create: `app/src/main/java/org/lrq3000/polycalx/WidgetRefreshActions.java`
@@ -32,7 +32,7 @@
 - [x] Add a reusable `refreshEventLists(Context)` method that calls `notifyAppWidgetViewDataChanged`.
 - [x] Schedule next-midnight refreshes after widget updates, appwidget enable, app launch, package replacement, boot/time/timezone/date changes, and refresh alarms.
 
-### Task 3: Add Calendar Content Refresh
+## Task 3: Add Calendar Content Refresh
 
 **Files:**
 - Create: `app/src/main/java/org/lrq3000/polycalx/CalendarChangeRefreshJobService.java`
@@ -41,7 +41,7 @@
 - [x] Register a `JobService` that refreshes widget lists when calendar provider content changes.
 - [x] Schedule a content-trigger job for `CalendarContract.Events.CONTENT_URI`, `CalendarContract.Instances.CONTENT_URI`, and `CalendarContract.Calendars.CONTENT_URI`.
 
-### Task 4: Fallback Interval And Verification
+## Task 4: Fallback Interval And Verification
 
 **Files:**
 - Modify: `app/src/main/res/xml/appwidget_provider.xml`
