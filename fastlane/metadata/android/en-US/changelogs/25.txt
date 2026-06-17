@@ -1,1 +1,1 @@
-Updated metadata and repository hygiene for F-Droid submission.
+Maintenance release with updated Android 13+ calendar permissions.
