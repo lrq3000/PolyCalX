@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+
+# Release artifacts are generated locally or by CI and should not be submitted as source.
+/app/release/
