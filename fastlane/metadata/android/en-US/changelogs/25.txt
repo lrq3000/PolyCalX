@@ -1,1 +1,1 @@
-Maintenance release with updated Android 13+ calendar permissions.
+Maintenance release preparing the repository for F-Droid submission with updated metadata and documentation.
