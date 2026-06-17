@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:updatePeriodMillis="21600000"
+    android:updatePeriodMillis="1800000"
     android:initialLayout="@layout/appwidget"
     android:previewImage="@drawable/widget_preview"
     android:minHeight="180dp"
