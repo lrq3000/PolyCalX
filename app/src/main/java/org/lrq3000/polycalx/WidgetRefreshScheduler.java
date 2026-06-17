@@ -29,7 +29,7 @@ public final class WidgetRefreshScheduler {
     public static void scheduleAll(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] allWidgetIDs = appWidgetManager.getAppWidgetIds(new ComponentName(context, PolyCalXWidgetProvider.class));
-        if (allWidgetIDs == null || allWidgetIDs.length == 0) {
+        if (allWidgetIDs.length == 0) {
             Log.d(TAG, "No active widgets found. Skipping refresh scheduling.");
             return;
         }
