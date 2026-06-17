@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WidgetRefreshScheduler.scheduleAll(this);
 
         // Check if launched from a widget tap (extras from LAUNCH_CALENDAR)
         Intent intent = getIntent();
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        WidgetRefreshScheduler.scheduleAll(this);
         setIntent(intent);
         if (intent.hasExtra(PolyCalXWidgetProvider.EVENT_ID) || intent.hasExtra(PolyCalXWidgetProvider.EVENT_BEGIN)) {
             showTapOptionsDialog(intent);

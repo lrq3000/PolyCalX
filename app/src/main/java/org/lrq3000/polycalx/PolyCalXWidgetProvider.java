@@ -19,6 +19,7 @@ public class PolyCalXWidgetProvider extends AppWidgetProvider {
     public static final String RELOAD_EVENTS = "org.lrq3000.polycalx.RELOAD_EVENTS";
     public static final String CHANGE_SOURCE = "org.lrq3000.polycalx.CHANGE_SOURCE";
     public static final String LAUNCH_CALENDAR = "org.lrq3000.polycalx.LAUNCH_CALENDAR";
+    public static final String REFRESH_AT_MIDNIGHT = "org.lrq3000.polycalx.REFRESH_AT_MIDNIGHT";
     public static final String EVENT_ID = "org.lrq3000.polycalx.EVENT_ID";
     public static final String EVENT_BEGIN = "org.lrq3000.polycalx.EVENT_BEGIN";
     private static final String TAG = "PolyCalXWidgetProvider";
@@ -80,6 +81,7 @@ public class PolyCalXWidgetProvider extends AppWidgetProvider {
 
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
+        WidgetRefreshScheduler.scheduleAll(context);
         Log.d(TAG, "End of OnUpdate()");
     }
 
@@ -92,17 +94,20 @@ public class PolyCalXWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent){
         Log.d(TAG, "onReceive() -> " + intent.toString() );
-        if( intent.getAction() == RELOAD_EVENTS){
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            int[] allWidgetIDs = appWidgetManager.getAppWidgetIds( new ComponentName(context, this.getClass()) );
-            appWidgetManager.notifyAppWidgetViewDataChanged(allWidgetIDs, R.id.listview);
+        String action = intent.getAction();
+        if( WidgetRefreshActions.isReloadEventsAction(action)){
+            refreshEventLists(context);
         }
-        if( intent.getAction() == CHANGE_SOURCE){
+        if( WidgetRefreshActions.isChangeSourceAction(action)){
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] allWidgetIDs = appWidgetManager.getAppWidgetIds( new ComponentName(context, this.getClass()) );
             onUpdate(context, appWidgetManager, allWidgetIDs);
         }
-        if( intent.getAction() == LAUNCH_CALENDAR){
+        if( WidgetRefreshActions.isSchedulerWakeAction(action)){
+            refreshEventLists(context);
+            WidgetRefreshScheduler.scheduleAll(context);
+        }
+        if( LAUNCH_CALENDAR.equals(action)){
             Log.d(TAG, "LAUNCH_CALENDAR received (handled directly by activity template)");
         }
 
@@ -112,13 +117,31 @@ public class PolyCalXWidgetProvider extends AppWidgetProvider {
     }
 
     @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
+        WidgetRefreshScheduler.scheduleAll(context);
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        WidgetRefreshScheduler.cancelAll(context);
+        super.onDisabled(context);
+    }
+
+    public static void refreshEventLists(Context context) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] allWidgetIDs = appWidgetManager.getAppWidgetIds( new ComponentName(context, PolyCalXWidgetProvider.class) );
+        appWidgetManager.notifyAppWidgetViewDataChanged(allWidgetIDs, R.id.listview);
+    }
+
+    @Override
     public void onDeleted(Context context, int[] appWidgetIds){
         for(int i=0; i<appWidgetIds.length; ++i) {
             Log.d(TAG, "Removed wID " + appWidgetIds[i] + ". Deleting preferences file.");
             String pref_file_name = String.format("org.lrq3000.polycalx.prefs_for_widget_%d", appWidgetIds[i]);
             context.deleteSharedPreferences(pref_file_name);
         }
-        super.onDisabled(context);
+        super.onDeleted(context, appWidgetIds);
     }
 
 
