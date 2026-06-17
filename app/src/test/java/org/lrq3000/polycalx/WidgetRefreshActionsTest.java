@@ -1,5 +1,7 @@
 package org.lrq3000.polycalx;
 
+import android.content.Intent;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
@@ -24,5 +26,15 @@ public class WidgetRefreshActionsTest {
     public void actionMatchersRejectNull() {
         assertFalse(WidgetRefreshActions.isReloadEventsAction(null));
         assertFalse(WidgetRefreshActions.isChangeSourceAction(null));
+    }
+
+    @Test
+    public void schedulerWakeActionIncludesPackageReplacement() {
+        assertTrue(WidgetRefreshActions.isSchedulerWakeAction(Intent.ACTION_MY_PACKAGE_REPLACED));
+    }
+
+    @Test
+    public void schedulerWakeActionRejectsUnrelatedAction() {
+        assertFalse(WidgetRefreshActions.isSchedulerWakeAction(Intent.ACTION_VIEW));
     }
 }

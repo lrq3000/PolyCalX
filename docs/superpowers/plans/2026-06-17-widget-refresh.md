@@ -30,7 +30,7 @@
 
 - [x] Replace `==` broadcast action checks with null-safe `.equals` helpers.
 - [x] Add a reusable `refreshEventLists(Context)` method that calls `notifyAppWidgetViewDataChanged`.
-- [x] Schedule next-midnight refreshes after widget updates, appwidget enable, boot/time/timezone/date changes, and refresh alarms.
+- [x] Schedule next-midnight refreshes after widget updates, appwidget enable, app launch, package replacement, boot/time/timezone/date changes, and refresh alarms.
 
 ### Task 3: Add Calendar Content Refresh
 

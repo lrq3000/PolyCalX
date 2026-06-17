@@ -46,6 +46,7 @@
                 <action android:name="android.intent.action.TIME_SET" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
                 <action android:name="org.lrq3000.polycalx.RELOAD_EVENTS" />
                 <action android:name="org.lrq3000.polycalx.CHANGE_SOURCE" />
                 <action android:name="org.lrq3000.polycalx.LAUNCH_CALENDAR" />

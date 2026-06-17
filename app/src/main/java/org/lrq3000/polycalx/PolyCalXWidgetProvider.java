@@ -103,7 +103,7 @@ public class PolyCalXWidgetProvider extends AppWidgetProvider {
             int[] allWidgetIDs = appWidgetManager.getAppWidgetIds( new ComponentName(context, this.getClass()) );
             onUpdate(context, appWidgetManager, allWidgetIDs);
         }
-        if( isClockOrBootRefreshAction(action)){
+        if( WidgetRefreshActions.isSchedulerWakeAction(action)){
             refreshEventLists(context);
             WidgetRefreshScheduler.scheduleAll(context);
         }
@@ -132,15 +132,6 @@ public class PolyCalXWidgetProvider extends AppWidgetProvider {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] allWidgetIDs = appWidgetManager.getAppWidgetIds( new ComponentName(context, PolyCalXWidgetProvider.class) );
         appWidgetManager.notifyAppWidgetViewDataChanged(allWidgetIDs, R.id.listview);
-    }
-
-    private boolean isClockOrBootRefreshAction(String action) {
-        return REFRESH_AT_MIDNIGHT.equals(action) ||
-                Intent.ACTION_DATE_CHANGED.equals(action) ||
-                Intent.ACTION_TIME_CHANGED.equals(action) ||
-                Intent.ACTION_TIMEZONE_CHANGED.equals(action) ||
-                Intent.ACTION_LOCALE_CHANGED.equals(action) ||
-                Intent.ACTION_BOOT_COMPLETED.equals(action);
     }
 
     @Override
